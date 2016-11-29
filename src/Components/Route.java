@@ -17,8 +17,8 @@ public class Route {
     private int subRouteCounter = 0;
     private int movePos = 0;
     private int moveMax;
-    private Tower[] towers;
-    private String[] moves;
+    private Tower[] towers; // Torres de la ruta con su estado
+    private String[] moves; // Listado de movimientos realizados en la ruta
 
     /**
      * Constructor vacío.
