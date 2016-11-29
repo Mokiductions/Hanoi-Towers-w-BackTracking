@@ -20,9 +20,16 @@ public class Route {
     private Tower[] towers;
     private String[] moves;
 
+    /**
+     * Constructor vacío.
+     */
     public Route() {
     }
 
+    /**
+     * Constructor que recibe el número de discos como parámetro.
+     * @param diskNum Integer - Número de discos
+     */
     public Route(int diskNum) {
         genTowers(diskNum);
         moveMax = genMoveMax(diskNum);
@@ -42,6 +49,12 @@ public class Route {
         
     }
 
+    /**
+     * Generador principal de las torres, crea las 3 torres necesarias para
+     * el juego, y acumula los discos en la primera torre en el orden
+     * correcto.
+     * @param diskNum Integer - Número de discos
+     */
     private void genTowers(int diskNum) {
         towers = new Tower[3];
         Disk d;
