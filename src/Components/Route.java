@@ -34,7 +34,7 @@ public class Route {
         genTowers(diskNum);
         moveMax = genMoveMax(diskNum);
         moves = new String[moveMax];
-        genMaxSubRoutes();
+        subRoutesMax = genMaxSubRoutes();
     }
 
     public Route(Tower[] towers, String[] moves, int moveMax, int movePos,
@@ -45,7 +45,7 @@ public class Route {
         this.movePos = movePos;
         this.subRouteCounter = subRoutes;
         this.routeLevel = routeLevel;
-        genMaxSubRoutes();
+        subRoutesMax = genMaxSubRoutes();
         
     }
 
@@ -67,6 +67,12 @@ public class Route {
         }
     }
 
+    /**
+     * Función que devuelve el máximo de movimientos que se pueden realizar con
+     * el número de discos especificado.
+     * @param diskNum Integer - Número de discos
+     * @return Integer - Número máximo de movimientos
+     */
     private int genMoveMax(int diskNum) {
         int max = 1;
         for (int i = 0; i < diskNum; i++) {
@@ -75,17 +81,24 @@ public class Route {
         return max - 1;
     }
 
-    private void genMaxSubRoutes() {
+    /**
+     * Función que devuelve la cantidad máxima de subrutas que puede generar
+     * una ruta.
+     * @return Integer - Cantidad de subrutas posibles
+     */
+    private int genMaxSubRoutes() {
+        int max = 0;
         for (int i = 0; i < 3; i++) {
             for (int k = 0; k < 3; k++) {
                 if (k != i) {
                     if (!towers[i].getTower().isEmpty() && (towers[k].getTower().isEmpty()
                             || towers[i].popDisk().getSize() < towers[k].popDisk().getSize())) {
-                        subRoutesMax++;
+                        max++;
                     }
                 }
             }
         }
+        return max;
     }
 
     public Stack nextMoves() {
@@ -134,18 +147,36 @@ public class Route {
                 0, routeLevel + 1);
     }
 
+    /**
+     * Función que devuelve el estado actual de las torres en la ruta.
+     * @return Tower[] - Torres de la ruta actual
+     */
     public Tower[] getTowers() {
         return towers;
     }
 
+    /**
+     * Función que devuelve la posición del movimiento.
+     * @return Integer - Posición del movimiento
+     */
     public int getMovePos() {
         return movePos;
     }
 
+    /**
+     * Función que devuelve la cantidad máxima de movimientos que se pueden 
+     * llevar a cabo en la ruta.
+     * @return Integer - Cantidad máxima de movimientos posibles
+     */
     public int getMoveMax() {
         return moveMax;
     }
 
+    /**
+     * Función que devuelve el array de Strings que contiene los movimientos 
+     * realizados en esta ruta.
+     * @return String[] - Listado de movimientos realizados
+     */
     public String[] getMoves() {
         return moves;
     }
