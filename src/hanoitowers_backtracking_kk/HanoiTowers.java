@@ -8,7 +8,20 @@ import Components.Tower;
 import java.util.ArrayList;
 
 /**
- *
+ * Clase 'HanoiTowers', que contiene la ejecución principal del juego, esta
+ * clase solicita al usuario los datos (cantidad de discos) para iniciar el 
+ * juego, inicializa estado inicial (todos los discos apilados en el orden
+ * correcto en la primera torre), y empieza la iteración para resolver el juego.
+ * Al final muestra los pasos necesarios para resolverlo.
+ * 
+ * Esta forma de resolverlo presenta un enorme déficit de velocidad en 
+ * comparación a otros métodos posibles para resolver el mismo juego, como un
+ * método recursivo, o un método basado en el calculo de los pasos a realizar
+ * de forma algorítmica antes de realizarlos.
+ * 
+ * Pese a ello, es una buena forma de practicar la estructura principal del 
+ * backtracking.
+ * 
  * @author Miquel Ginés Borràs
  */
 public class HanoiTowers {
@@ -17,7 +30,7 @@ public class HanoiTowers {
     private int diskNum; // Cantidad de discos del juego
 
     /**
-     * Constructos principal, recorrido del programa.
+     * Constructor principal, recorrido del programa.
      */
     public HanoiTowers() {
         gameStack = new Stack();
@@ -73,6 +86,12 @@ public class HanoiTowers {
         }
     }
 
+    /**
+     * Método principal de resolución del juego, itera mientras queden objetos
+     * en la pila de caminos, y no se encuentre resuelto el juego.
+     * Para ello coge cada camino, y va recorriendo los posibles movimientos de 
+     * dicho camino.
+     */
     private void solveGame() {
         System.out.println("\nResolviendo el juego...");
         while (!gameStack.isEmpty() && !isSolved()) {
@@ -84,11 +103,19 @@ public class HanoiTowers {
                 }
             }
         }
+        // Si sale del bucle anterior, y la pila principal no se encuentra
+        // vacía, entonces el juego está resuelto y visualiza el resultado.
         if (!gameStack.empty()) {
             showResult();
         }
     }
 
+    /**
+     * Función que devuelve el estado de la solución del juego.
+     * Para ello comprueba el estado actual del juego, y comprueba si los discos
+     * se encuentran en la torre de destino y en el orden correcto.
+     * @return Boolean - True si está resuelto, False si no lo está.
+     */
     private boolean isSolved() {
         Stack stackAux = (Stack) gameStack.clone();
         Route route = (Route) stackAux.pop();
@@ -110,6 +137,10 @@ public class HanoiTowers {
         return false;
     }
     
+    /**
+     * Método que muestra los pasos necesarios para resolver el juego, según el 
+     * camino seguido.
+     */
     private void showResult() {
         System.out.println("\nJuego solucionado.\n\nEstos son los pasos a seguir para"
                 + " la resolución del juego de las Torres de Hanoi con " + diskNum
