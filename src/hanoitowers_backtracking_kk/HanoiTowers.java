@@ -13,9 +13,12 @@ import java.util.ArrayList;
  */
 public class HanoiTowers {
 
-    private Stack gameStack;
-    private int diskNum;
+    private Stack gameStack; // Pila principal de caminos del juego
+    private int diskNum; // Cantidad de discos del juego
 
+    /**
+     * Constructos principal, recorrido del programa.
+     */
     public HanoiTowers() {
         gameStack = new Stack();
         gameMenu();
@@ -23,18 +26,31 @@ public class HanoiTowers {
         solveGame();
     }
 
+    /**
+     * Menú del juego, solicita al usuario la cantidad de discos que va a querer
+     * en el juego.
+     */
     private void gameMenu() {
         System.out.println("\nIntroduzca la cantidad de discos para el juego. "
                 + "(Número mayor que 0)");
         diskNum = readInt();
     }
 
+    /**
+     * Función para leer un número entero por teclado, sólo permite la
+     * introducción de números positivos mayores que 0.
+     * @return Integer - Número introducido por el usuario
+     */
     private int readInt() {
         Scanner sc = new Scanner(System.in);
         int i;
         do {
             try {
                 i = sc.nextInt();
+                if (i < 1) {
+                    System.out.println("\nDebe introducir un número mayor que 0.\n"
+                        + "Inténtelo de nuevo.");
+                }
             } catch (Exception e) {
                 System.out.println("\nDebe introducir un número mayor que 0.\n"
                         + "Inténtelo de nuevo.");
@@ -44,6 +60,11 @@ public class HanoiTowers {
         return i;
     }
 
+    /**
+     * Generación inicial del juego, crea un primer objeto Route de la cantidad
+     * de discos indicada por el usuario, y añade los posibles caminos de esta
+     * ruta a la pila principal del juego.
+     */
     private void genGame() {
         Route route = new Route(diskNum);
         Stack stackAux = route.nextMoves();
@@ -53,6 +74,7 @@ public class HanoiTowers {
     }
 
     private void solveGame() {
+        System.out.println("\nResolviendo el juego...");
         while (!gameStack.isEmpty() && !isSolved()) {
             Route route = (Route) gameStack.pop();
             if (route.getMovePos() < route.getMoveMax()) {
